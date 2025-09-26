@@ -4,17 +4,21 @@ import { RouterLink } from '@angular/router';
 import { AuthApiService } from '../services/auth-api.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, RouterLink, RouterModule],
+  imports: [FormsModule, RouterLink, RouterModule, CommonModule
+  ],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
 export class Register {
   email: string = '';
+  username: string = '';
   password: string = '';
   confirmPassword: string = '';
+  errorMessage: string = ''
 
   constructor(private apiService: AuthApiService, private router: Router) {}
   onSubmit() {
@@ -26,6 +30,7 @@ export class Register {
     const credentials = {
       email: this.email,
       password: this.password,
+      username: this.username
     };
 
     this.apiService.register(credentials).subscribe({
@@ -35,8 +40,8 @@ export class Register {
         this.router.navigate(['/']);
       },
       error: (err) => {
-        console.error('❌ Erreur API :', err);
-        alert("❌ Erreur lors de l'inscription");
+       // alert("❌ Erreur lors de l'inscription : " + err.message);
+        this.errorMessage = err.message
       },
     });
   }

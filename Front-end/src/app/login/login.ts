@@ -26,7 +26,7 @@ export class Login {
 
     this.apiService.login(credentials).subscribe({
       next: (res) => {
-        localStorage.setItem('token', res.token);
+        //localStorage.setItem('token', res.token);
 
         alert('Vous êtes bien connecté');
         this.router.navigate(['/dashboard']);
